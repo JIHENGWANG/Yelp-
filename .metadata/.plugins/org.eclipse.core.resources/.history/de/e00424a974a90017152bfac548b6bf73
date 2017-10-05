@@ -43,7 +43,6 @@ public class ItermHistory extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			// Testing git 
 			JSONObject input = RpcHelper.readJsonObject(request);
 			if (input.has("user_id") && input.has("visited")) {
 				String userId = (String) input.get("user_id");
