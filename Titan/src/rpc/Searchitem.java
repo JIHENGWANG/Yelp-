@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import entity.Item;
 import external.YelpAPI;
+import db.mysql.MySQLConnection;
+
 
 /**
  * Servlet implementation class Searchitem
@@ -24,6 +26,8 @@ import external.YelpAPI;
 @WebServlet("/search")
 public class Searchitem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MySQLConnection conn = MySQLConnection.getInstance();
+
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,16 +42,15 @@ public class Searchitem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String userId = request.getParameter("user_id");
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
 		// Term can be empty or null.
 		String term = request.getParameter("term");
-		YelpAPI api = new YelpAPI();
-		List<Item> items = api.search(lat, lon, term);
+		List<Item> items = conn.searchItems(userId, lat, lon, term);
 		List<JSONObject> list = new ArrayList<>();
 		try {
 			for (Item item : items) {
-				// Add a thin version of item object
 				JSONObject obj = item.toJSONObject();
 				list.add(obj);
 			}
@@ -56,6 +59,7 @@ public class Searchitem extends HttpServlet {
 		}
 		JSONArray array = new JSONArray(list);
 		RpcHelper.writeJsonArray(response, array);
+
 	}
 	
 

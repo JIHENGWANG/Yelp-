@@ -156,44 +156,45 @@ public class YelpAPI {
 	}
 	
 	// Convert JSONArray to a list of item objects.
-	  private List<Item> getItemList(JSONArray array) throws JSONException {
-	    List<Item> list = new ArrayList<>();
+	private List<Item> getItemList(JSONArray array) throws JSONException {
+		List<Item> list = new ArrayList<>();
 
-	    for (int i = 0; i < array.length(); i++) {
-	      JSONObject object = array.getJSONObject(i);
-	      // Parse json object fetched from Yelp API specifically.
-	      ItemBuilder builder = new ItemBuilder();
-	      // Builder pattern gives us flexibility to construct an item.
-	      builder.setItemId(object.getString("id"));
-	      JSONArray jsonArray = (JSONArray) object.get("categories");
-	      Set<String> categories = new HashSet<>();
-	      for (int j = 0; j < jsonArray.length(); j++) {
-	        JSONObject subObejct = jsonArray.getJSONObject(j);
-	        categories.add(subObejct.getString("title"));
-	      }
-	      builder.setCategories(categories);
-	      builder.setName(object.getString("name"));
-	      builder.setImageUrl(object.getString("image_url"));
-	      builder.setRating(object.getDouble("rating"));
-	      JSONObject coordinates = (JSONObject) object.get("coordinates");
-	      builder.setLatitude(coordinates.getDouble("latitude"));
-	      builder.setLongitude(coordinates.getDouble("longitude"));
-	      JSONObject location = (JSONObject) object.get("location");
-	      builder.setCity(location.getString("city"));
-	      builder.setState(location.getString("state"));
-	      builder.setZipcode(location.getString("zip_code"));
-	      JSONArray addresses = (JSONArray) location.get("display_address");
-	      String fullAddress = addresses.join(",");
-	      builder.setAddress(fullAddress);
-	      builder.setImageUrl(object.getString("image_url"));
-	      builder.setUrl(object.getString("url"));
+		for (int i = 0; i < array.length(); i++) {
+			JSONObject object = array.getJSONObject(i);
+			// Parse json object fetched from Yelp API specifically.
+			ItemBuilder builder = new ItemBuilder();
+			// Builder pattern gives us flexibility to construct an item.
+			builder.setItemId(object.getString("id"));
+			JSONArray jsonArray = (JSONArray) object.get("categories");
+			Set<String> categories = new HashSet<>();
+			for (int j = 0; j < jsonArray.length(); j++) {
+				JSONObject subObejct = jsonArray.getJSONObject(j);
+				categories.add(subObejct.getString("title"));
+			}
+			builder.setCategories(categories);
+			builder.setName(object.getString("name"));
+			builder.setImageUrl(object.getString("image_url"));
+			builder.setRating(object.getDouble("rating"));
+			JSONObject coordinates = (JSONObject) object.get("coordinates");
+			builder.setLatitude(coordinates.getDouble("latitude"));
+			builder.setLongitude(coordinates.getDouble("longitude"));
+			JSONObject location = (JSONObject) object.get("location");
+			builder.setCity(location.getString("city"));
+			builder.setCountry(location.getString("country"));
+			builder.setState(location.getString("state"));
+			builder.setZipcode(location.getString("zip_code"));
+			JSONArray addresses = (JSONArray) location.get("display_address");
+			String fullAddress = addresses.join(",");
+			builder.setAddress(fullAddress);
+			builder.setImageUrl(object.getString("image_url"));
+			builder.setUrl(object.getString("url"));
 
-	      // Uses this builder pattern we can freely add fields.
-	      Item item = builder.build();
-	      list.add(item);
-	    }
-	    return list;
-	  }
+			// Uses this builder pattern we can freely add fields.
+			Item item = builder.build();
+			list.add(item);
+		}
+		return list;
+	}
 
 
 	/**

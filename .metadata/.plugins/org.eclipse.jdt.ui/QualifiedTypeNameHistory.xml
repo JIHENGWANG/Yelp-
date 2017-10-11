@@ -3,7 +3,11 @@
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
 <fullyQualifiedTypeName name="org.json.JSONObject"/>
 <fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="org.json.JSONException"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="external.YelpAPI"/>
+<fullyQualifiedTypeName name="entity.Item"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="org.json.JSONException"/>
 </qualifiedTypeNameHistroy>
