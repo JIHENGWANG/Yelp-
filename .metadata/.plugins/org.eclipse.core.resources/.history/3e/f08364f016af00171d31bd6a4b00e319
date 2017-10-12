@@ -1,7 +1,8 @@
 package rpc;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import db.mysql.MySQLConnection;
+
+
 /**
- * Servlet implementation class Searchitem
+ * Servlet implementation class ItermHistory
  */
-@WebServlet("/search")
-public class Searchitem extends HttpServlet {
+@WebServlet("/history")
+public class ItermHistory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MySQLConnection conn = MySQLConnection.getInstance();
+
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Searchitem() {
+    public ItermHistory() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +39,7 @@ public class Searchitem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("application/json");
-
-		String username = "";
-		if (request.getParameter("username") != null) {
-			username = request.getParameter("username");
-		}
-		JSONObject obj = new JSONObject();
-		try {
-			obj.put("username", username);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		PrintWriter out = response.getWriter();
-		out.print(obj);
-		out.flush();
-		out.close();
-
-;   
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -57,7 +47,21 @@ public class Searchitem extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			JSONObject input = RpcHelper.readJsonObject(request);
+			String userId = input.getString("user_id");
+			JSONArray array = (JSONArray) input.get("favorite");
+
+			List<String> histories = new ArrayList<>();
+			for (int i = 0; i < array.length(); i++) {
+				String itemId = (String) array.get(i);
+				histories.add(itemId);
+			}
+			conn.setFavoriteItems(userId, histories);
+			RpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
