@@ -53,6 +53,7 @@ public class ItermHistory extends HttpServlet {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+
 	      array.put(obj);
 	    }
 	    RpcHelper.writeJsonArray(response, array);

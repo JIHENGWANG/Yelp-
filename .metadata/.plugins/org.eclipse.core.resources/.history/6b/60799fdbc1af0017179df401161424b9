@@ -44,30 +44,29 @@ public class Searchitem extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String userId = request.getParameter("user_id");
-		double lat = Double.parseDouble(request.getParameter("lat"));
-		double lon = Double.parseDouble(request.getParameter("lon"));
-		// Term can be empty or null.
-		String term = request.getParameter("term");
-		List<Item> items = conn.searchItems(userId, lat, lon, term);
-		List<JSONObject> list = new ArrayList<>();
+	    double lat = Double.parseDouble(request.getParameter("lat"));
+	    double lon = Double.parseDouble(request.getParameter("lon"));
+	    // Term can be empty or null.
+	    String term = request.getParameter("term");
+	    List<Item> items = conn.searchItems(userId, lat, lon, term);
+	    List<JSONObject> list = new ArrayList<>();
 
-		Set<String> favorite = conn.getFavoriteItemIds(userId);
-		try {
-			for (Item item : items) {
-				// Add a thin version of restaurant object
-				JSONObject obj = item.toJSONObject();
-				// Check if this is a favorite one.
-				// This field is required by frontend to correctly display
-				// favorite items.
-				obj.put("favorite", favorite.contains(item.getItemId()));
+	    Set<String> favorite = conn.getFavoriteItemIds(userId);
+	    try {
+	      for (Item item : items) {
+	        // Add a thin version of restaurant object
+	        JSONObject obj = item.toJSONObject();
+	        // Check if this is a favorite one.
+	        // This field is required by frontend to correctly display favorite items.
+	        obj.put("favorite", favorite.contains(item.getItemId()));
 
-				list.add(obj);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		JSONArray array = new JSONArray(list);
-		RpcHelper.writeJsonArray(response, array);
+	        list.add(obj);
+	      }
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    JSONArray array = new JSONArray(list);
+	    RpcHelper.writeJsonArray(response, array);
 
 
 	}

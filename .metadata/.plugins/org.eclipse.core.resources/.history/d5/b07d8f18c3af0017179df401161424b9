@@ -37,6 +37,7 @@ public class RpcHelper {
 				out.flush();
 				out.close();
 				System.out.println("Response" + obj);
+				System.out.println();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -51,6 +52,7 @@ public class RpcHelper {
 				out.flush();
 				out.close();
 				System.out.println("Response" + array);
+				System.out.println();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
