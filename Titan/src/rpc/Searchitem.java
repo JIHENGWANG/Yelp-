@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import entity.Item;
 import external.YelpAPI;
+import db.DBConnection;
+import db.DBConnectionFactory;
 import db.mysql.MySQLConnection;
 
 
@@ -27,7 +29,7 @@ import db.mysql.MySQLConnection;
 @WebServlet("/search")
 public class Searchitem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MySQLConnection conn = MySQLConnection.getInstance();
+	private DBConnection conn = DBConnectionFactory.getDBConnection();
 
        
     /**

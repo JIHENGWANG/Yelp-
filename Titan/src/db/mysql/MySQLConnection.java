@@ -11,9 +11,10 @@ import java.util.Set;
 import entity.Item;
 import entity.Item.ItemBuilder;
 import external.YelpAPI;
+import db.DBConnection;
 
 
-public class MySQLConnection {
+public class MySQLConnection implements DBConnection{
 
 	private static MySQLConnection instance;
 

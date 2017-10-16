@@ -7,13 +7,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
+import db.DBConnection;
+import db.DBConnectionFactory;
 import db.mysql.MySQLConnection;
 import entity.Item;
 
 public class Recommendation {
 	public List<Item> recommendItems(String userId, double lat, double lon) {
-		MySQLConnection conn = MySQLConnection.getInstance();
+		DBConnection conn = DBConnectionFactory.getDBConnection();
 
 		Set<String> favoriteItems = conn.getFavoriteItemIds(userId); // step 1 // // db querie
 		Set<String> allCategories = new HashSet<>(); // step 2
