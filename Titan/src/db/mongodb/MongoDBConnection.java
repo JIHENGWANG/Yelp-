@@ -122,23 +122,21 @@ public class MongoDBConnection implements DBConnection {
 
 	@Override
 	public List<Item> searchItems(String userId, double lat, double lon, String term) {
-		// TODO Auto-generated method stub
 		// Connect to external API
-		YelpAPI api = new YelpAPI();
+		YelpAPI api = new YelpAPI(); // moved here
 		List<Item> items = api.search(lat, lon, term);
 		for (Item item : items) {
 			// Save the item into our own db.
 			saveItem(item);
 		}
 		return items;
+
 	}
 
 	@Override
 	public void saveItem(Item item) {
-		// TODO Auto-generated method stub
 		UpdateOptions options = new UpdateOptions().upsert(true);
-		// First document is a condition, second document is an operation, the
-		// third one is a real MongoDB document.
+		// First document is a condition, second document is an operation, the third one is a real MongoDB document. 
 
 		db.getCollection("items").updateOne(new Document().append("item_id", item.getItemId()),
 				new Document("$set",
@@ -151,6 +149,7 @@ public class MongoDBConnection implements DBConnection {
 								.append("snippet_url", item.getSnippetUrl()).append("image_url", item.getImageUrl())
 								.append("url", item.getUrl()).append("categories", item.getCategories())),
 				options);
+
 
 	}
 

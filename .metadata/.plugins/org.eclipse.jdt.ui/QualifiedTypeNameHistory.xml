@@ -12,4 +12,8 @@
 <fullyQualifiedTypeName name="com.mysql.jdbc.Connection"/>
 <fullyQualifiedTypeName name="java.sql.DriverManager"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="com.mongodb.client.model.UpdateOptions"/>
+<fullyQualifiedTypeName name="org.bson.Document"/>
+<fullyQualifiedTypeName name="db.DBConnection"/>
+<fullyQualifiedTypeName name="db.DBConnectionFactory"/>
 </qualifiedTypeNameHistroy>
